@@ -19,14 +19,10 @@ function handleMovement(eventData){
 function handleTouchStart(event){
     phoneInformation.touches=event.touches
 }
-function handleTouchMove(event){
-    phoneInformation.touches=event.touches
-}
 function startController(){
         window.setInterval(sendPhoneData, 500);
 }       
 window.addEventListener('deviceorientation', handleOrientation);
 window.addEventListener('touchstart', handleTouchStart);
-window.addEventListener('touchmove', handleTouchMove);
 window.addEventListener('devicemotion', handleMovement);
 
