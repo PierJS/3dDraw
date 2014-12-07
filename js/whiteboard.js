@@ -25,7 +25,7 @@ function startWhiteBoardAnimation(){
 }
 
 material = new THREE.LineBasicMaterial({
-        color: 0x000000
+        color: 0x000000,linewidth: 3, fog:true
 });
 
 function addPoint(x,y,z){
