@@ -50,9 +50,20 @@ function updatePlane(rectLength,rectWidth,z){
         rectMesh.position.z = z;
         scene.add( rectMesh );
 }
+function onPhoneInformation(phoneInformation){
+        if( phoneInformation.touches === undefined || phoneInformation.movement.z === undefined){
+                return;
+        }
+        this.z = phoneInformation.movement.z;
+        if(phoneInformation.touches[0] != this.lastTouch){
+                this.lastTouch=phoneInformation.touches[0];
+                addPoint(phoneInformation.touches[0][0],phoneInformation.touches[0][1],this.z);
+        }
 
-function startWhiteBoard(){
-    startWhiteBoardAnimation();
-    updatePlane(100,100,100);
+        updatePlane(100,100,this.z);
 }
 
+function startWhiteBoard(){
+    sRTC.onreceiveJSON = onPhoneInformation;
+    startWhiteBoardAnimation();
+}

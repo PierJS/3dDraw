@@ -1,6 +1,6 @@
 var phoneInformation = { "rotation": {"alpha":0 , "beta":0, "gamma":0} , "movement":{"x":0 , "y":0, "z":0}, "touches":[]}
 function sendPhoneData(){
-    return;
+    sRTC.sendJSON(phoneInformation);
 }
 
 function handleOrientation(eventData) {
@@ -14,6 +14,7 @@ function handleMovement(eventData){
     var acceleration = eventData.acceleration;
     phoneInformation.movement.x = acceleration.x;
     phoneInformation.movement.y = acceleration.x;
+    //INTEGRATE TO GET LOCATION
     phoneInformation.movement.z = acceleration.x;
 }
 function handleTouchStart(event){
