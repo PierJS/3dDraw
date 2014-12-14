@@ -51,19 +51,22 @@ function updatePlane(rectLength,rectWidth,z){
         scene.add( rectMesh );
 }
 function onPhoneInformation(phoneInformation){
+        this.z=0
         if( phoneInformation.touches === undefined || phoneInformation.movement.z === undefined){
                 return;
         }
-        this.z = phoneInformation.movement.z;
         if(phoneInformation.touches[0] != this.lastTouch){
                 this.lastTouch=phoneInformation.touches[0];
                 addPoint(phoneInformation.touches[0][0],phoneInformation.touches[0][1],this.z);
         }
+        if(this.z != phoneInformation.movement.z){
+                this.z = phoneInformation.movement.z;
+                updatePlane(100,100,this.z);
+        }
 
-        updatePlane(100,100,this.z);
 }
 
 function startWhiteBoard(){
-    sRTC.onreceiveJSON = onPhoneInformation;
+    sRTC.addEventListener('onreceiveJSON', onPhoneInformation);
     startWhiteBoardAnimation();
 }
