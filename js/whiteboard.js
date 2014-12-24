@@ -29,6 +29,7 @@ material = new THREE.LineBasicMaterial({
 });
 
 function addPoint(x,y,z){
+    alert("add");
     var geometry = new THREE.Geometry();
     var vector = new THREE.Vector3(x,y,z);
     geometry.vertices.push(vector);
@@ -50,20 +51,22 @@ function updatePlane(rectLength,rectWidth,z){
         rectMesh.position.z = z;
         scene.add( rectMesh );
 }
+window.lastTouch = [0,0,0];
+window.z=0
 function onPhoneInformation(phoneInformation){
-        this.z=0
-        if( phoneInformation.touches === undefined || phoneInformation.movement.z === undefined){
+        console.log(phoneInformation);
+        if( phoneInformation.touches == undefined || phoneInformation.movement.z == undefined){
                 return;
         }
-        if(phoneInformation.touches[0] != this.lastTouch){
-                this.lastTouch=phoneInformation.touches[0];
-                addPoint(phoneInformation.touches[0][0],phoneInformation.touches[0][1],this.z);
-        }
-        if(this.z != phoneInformation.movement.z){
-                this.z = phoneInformation.movement.z;
-                updatePlane(100,100,this.z);
-        }
 
+        if(window.z != phoneInformation.movement.z){
+                window.z = phoneInformation.movement.z;
+                updatePlane(100,100,window.z*10);
+        }
+        if(phoneInformation.touches[0] != window.lastTouch[0] && phoneInformation.touches[1] != window.lastTouch[1]){
+                window.lastTouch=[phoneInformation.touches[0],phoneInformation.touches[1],window.z];
+                addPoint(phoneInformation.touches[0][0]*window.innerWidth*10,phoneInformation.touches[0][1]*window.innerHeight*10,window.z);
+        }
 }
 
 function startWhiteBoard(){
